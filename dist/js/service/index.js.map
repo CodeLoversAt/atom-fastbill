@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["service/index.js"],"sourcesContent":["(function() {\n    var angular = require('angular');\n    var app = angular.module('service', []);\n\n    app.factory('FastBill', require('./fastbill'));\n})();\n"],"file":"service/index.js","sourceRoot":"/source/"}

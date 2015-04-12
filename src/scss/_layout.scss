@@ -1,0 +1,26 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    padding-top: 20px;
+}
+
+.site-wrapper {
+    min-height: 100%;
+}
+
+.site-wrapper-inner {
+    display: flex;
+
+    .nav-sidebar {
+        flex: 2;
+    }
+
+    .main-content {
+        flex: 10;
+    }
+}

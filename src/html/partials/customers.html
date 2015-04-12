@@ -1,0 +1,7 @@
+<div class="container-fluid" ui-view="customers">
+    <ul>
+        <li ng-repeat="customer in customers | orderBy : 'label' ">
+            <a ui-sref="customers.details({customerId: customer.id})" ng-bind-html="customer.label"></a>
+        </li>
+    </ul>
+</div>
