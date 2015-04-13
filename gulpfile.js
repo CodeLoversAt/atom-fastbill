@@ -5,7 +5,8 @@
         minifyCss = require('gulp-minify-css'),
         uglify = require('gulp-uglify'),
         exec = require('child_process').exec,
-        sourcemaps = require('gulp-sourcemaps');
+        sourcemaps = require('gulp-sourcemaps'),
+        del = require('del');
 
     gulp.task('styles', ['bower', 'apm'], function () {
         return gulp.src('src/scss/style.scss')
@@ -35,6 +36,10 @@
         });
     });
 
+    gulp.task('clean', function (cb) {
+        del(['build/**/*'], cb);
+    });
+
     gulp.task('apm', function (cb) {
         exec('cd app && apm install .', function (err, stdout, stderr) {
             console.log(stdout);
@@ -51,7 +56,7 @@
         gulp.watch('src/html/**/*.html', ['html']);
     });
 
-    gulp.task('build', ['compile'], function (cb) {
+    gulp.task('build', ['compile', 'clean'], function (cb) {
         exec('grunt', function (err, stdout, stderr) {
             console.log(stdout);
             console.log(stderr);
@@ -59,6 +64,6 @@
         });
     });
 
-    gulp.task('default', ['compile']);
+    gulp.task('default', ['build']);
 
 }());

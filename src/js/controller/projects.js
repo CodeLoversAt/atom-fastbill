@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    module.exports = ['$scope', '$log', 'FastBill', '$filter', '$timeout', 'uiGridConstants', '$state', function ($scope, $log, FastBill, $filter, $timeout, uiGridConstants, $state) {
+    module.exports = ['$scope', '$log', 'FastBill', '$filter', '$timeout', '$state', function ($scope, $log, FastBill, $filter, $timeout, $state) {
         function projectsLoaded (projects) {
             $scope.$apply(function () {
                 $scope.projects = projects;

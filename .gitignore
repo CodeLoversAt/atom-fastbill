@@ -2,3 +2,5 @@ node_modules
 npm-debug.log
 app/bower_components
 app/node_modules
+cache
+build
