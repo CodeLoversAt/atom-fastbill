@@ -1,0 +1,2 @@
+!function(){"use strict";var t=function(){},e=require("change-case").camel;t.prototype.setData=function(t){var r;for(r in t)t.hasOwnProperty(r)&&(this[e(r)]=t[r])},module.exports=t}();
+//# sourceMappingURL=../model/model.js.map

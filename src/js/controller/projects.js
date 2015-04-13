@@ -13,51 +13,23 @@
             FastBill.getProjects(null).then(projectsLoaded);
         }
 
-        $scope.foo = function (row, column) {
-            $log.debug('[ProjectsCtrl] foo', row, column);
+        // pagination
+        $scope.model = {
+            currentPage: 1,
+            projectsPerPage: 10,
+            startProject: 0,
+            endProject: 10
         };
+        $scope.projectsPerPageOptions = [1, 5, 10, 20, 25, 50];
 
-        $scope.gridOptions = {
-            data: 'projectsData',
-            onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
-            },
-            enableRowSelection: true,
-            enableSelectAll: true,
-            selectionRowHeaderWidth: 35,
-            rowHeight: 35,
-            showGridFooter:true,
-            columnDefs: [
-                {
-                    field: 'title',
-                    sort: {
-                        direction: uiGridConstants.ASC,
-                        priority: 1
-                    },
-                    displayName: $filter('translate')('PROJECT.TITLE')
-                },
-                {
-                    field: 'startDate',
-                    displayName: $filter('translate')('PROJECT.START_DATE')
-                }
-            ]
-        };
+        $scope.$watch('[model.currentPage,model.projectsPerPage]', function (values) {
+            $log.debug('[ProjectsCtrl] values', values);
+            var currentPage = parseInt(values[0]),
+                projectsPerPage = parseInt(values[1]),
+                i = Math.max(0, currentPage - 1);
 
-        $scope.$watch('projects', function (projects) {
-            if (!projects) {
-                return;
-            }
-
-            $scope.projectsData = [];
-
-            projects.forEach(function (project) {
-                $scope.projectsData.push({
-                    title: project.title,
-                    startDate: project.startDate.format('L')
-                });
-            });
-
-            $log.debug('[CustomerProjectsCtrl] projectsData', $scope.projectsData);
+            $scope.model.startProject = i * projectsPerPage;
+            $scope.model.endProject = $scope.model.startProject + projectsPerPage;
         });
     }];
 }());

@@ -9,6 +9,7 @@
         customerDetails = require('./customerDetails'),
         invoices = require('./invoices'),
         projects = require('./projects'),
+        body = require('./body'),
         app = angular.module('controller', []);
 
     app.controller('MainCtrl', main);
@@ -18,4 +19,5 @@
     app.controller('CustomerDetailsCtrl', customerDetails);
     app.controller('InvoicesCtrl', invoices);
     app.controller('ProjectsCtrl', projects);
+    app.controller('BodyCtrl', body);
 }());

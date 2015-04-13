@@ -1,0 +1,2 @@
+!function(){"use strict";module.exports=["$scope","$rootScope","$state","$log",function(o,e,t,n){o.showSidebar=!1,o.toggleSidebar=function(){n.debug("[BodyCtrl] toggleSidebar",o.showSidebar),o.showSidebar=!o.showSidebar},o.showToggleButton=function(){return"login"!==t.current.name},e.$on("$stateChangeSuccess",function(){o.showSidebar=!1})}]}();
+//# sourceMappingURL=../controller/body.js.map

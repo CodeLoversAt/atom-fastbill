@@ -1,0 +1,2 @@
+!function(){"use strict";module.exports=["$scope","$log","$state","FastBill","$rootScope",function(o,n,e,i,t){o.model={},t.$on("authenticated",function(){e.go("index")}),o.login=function(){n.debug("[LoginCtrl] login",o.model),i.login(o.model.username,o.model.apiKey).then(function(){n.debug("[LoginCtrl] login success"),e.go("index")},function(){n.warn("[LoginCtrl] login failed")})}}]}();
+//# sourceMappingURL=../controller/login.js.map

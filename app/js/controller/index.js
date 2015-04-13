@@ -1,0 +1,2 @@
+!function(){"use strict";var r=require("angular"),e=require("./main"),o=require("./nav"),l=require("./login"),t=require("./customers"),i=require("./customerDetails"),n=require("./invoices"),c=require("./projects"),u=require("./body"),s=r.module("controller",[]);s.controller("MainCtrl",e),s.controller("NavCtrl",o),s.controller("LoginCtrl",l),s.controller("CustomersCtrl",t),s.controller("CustomerDetailsCtrl",i),s.controller("InvoicesCtrl",n),s.controller("ProjectsCtrl",c),s.controller("BodyCtrl",u)}();
+//# sourceMappingURL=../controller/index.js.map

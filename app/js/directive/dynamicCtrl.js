@@ -1,0 +1,2 @@
+!function(){"use strict";module.exports=["$compile","$parse",function(t,r){return{restrict:"A",terminal:!0,priority:1e5,link:function(n,e){var i=r(e.attr("dynamic-ctrl"))(n);e.removeAttr("dynamic-ctrl"),e.attr("ng-controller",i),t(e)(n)}}}]}();
+//# sourceMappingURL=../directive/dynamicCtrl.js.map

@@ -1,1 +1,0 @@
-{"version":3,"names":[],"mappings":"","sources":["directive/index.js"],"sourcesContent":["(function () {\n    \"use strict\";\n\n    var angular = require('angular'),\n        dynamicCtrl = require('./dynamicCtrl'),\n        app = angular.module('directive', []);\n\n    app.directive('dynamicCtrl', dynamicCtrl);\n}());"],"file":"directive/index.js","sourceRoot":"/source/"}

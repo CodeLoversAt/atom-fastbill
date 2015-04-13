@@ -1,1 +1,0 @@
-{"version":3,"names":[],"mappings":"","sources":["controller/main.js"],"sourcesContent":["(function () {\n    'use strict';\n    module.exports = ['$scope', '$log', 'FastBill', '$state', function ($scope, $log, FastBill, $state) {\n    }];\n}());\n"],"file":"controller/main.js","sourceRoot":"/source/"}

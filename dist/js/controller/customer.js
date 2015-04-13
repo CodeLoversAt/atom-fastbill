@@ -1,2 +1,0 @@
-!function(){"use strict";module.exports=["$scope","$log","FastBill","$state",function(t,e,i,n){i.isAuthenticated().then(function(t){e.debug("[MainCtrl] isAuthenitcated",t),t||n.go("login")})}]}();
-//# sourceMappingURL=../controller/customer.js.map

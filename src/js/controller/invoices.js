@@ -3,7 +3,7 @@
 
     var angular = require('angular');
 
-    module.exports = ['$scope', '$log', 'FastBill', '$filter', '$timeout', 'uiGridConstants', '$state', function ($scope, $log, FastBill, $filter, $timeout, uiGridConstants, $state) {
+    module.exports = ['$scope', '$log', 'FastBill', '$filter', '$state', function ($scope, $log, FastBill, $filter, $state) {
         function invoicesLoaded (invoices) {
             $scope.$apply(function () {
                 $scope.invoices = invoices;
@@ -12,117 +12,68 @@
         if ($state.params.customerId) {
             FastBill.getInvoices($state.params.customerId).then(invoicesLoaded);
         } else {
-            FastBill.getInvoices().then(invoicesLoaded);
+            FastBill.getInvoices(null).then(invoicesLoaded);
         }
+        $scope.showHeader = !$state.params.customerId;
 
-        $scope.gridOptions = {
-            data: 'invoicesData',
-            onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
-            },
-            enableRowSelection: true,
-            enableSelectAll: true,
-            selectionRowHeaderWidth: 35,
-            rowHeight: 35,
-            showGridFooter:true,
-            columnDefs: [
-                {
-                    field: 'state',
-                    displayName: $filter('translate')('INVOICE.STATE.LABEL')
-                },
-                {
-                    field: 'number',
-                    sort: {
-                        direction: uiGridConstants.DESC,
-                        priority: 1
-                    },
-                    displayName: $filter('translate')('INVOICE.NUMBER')
-                },
-                {
-                    field: 'date',
-                    displayName: $filter('translate')('INVOICE.DATE')
-                },
-                {
-                    field: 'client',
-                    enableSorting: false,
-                    displayName: $filter('translate')('INVOICE.CLIENT')
-                },
-                {
-                    field: 'total',
-                    displayName: $filter('translate')('INVOICE.TOTAL')
-                },
-                {
-                    field: 'url',
-                    displayName: $filter('translate')('INVOICE.DOWNLOAD'),
-                    cellTemplate: '<a ng-click="grid.appScope.downloadInvoice(row.entity.url, row.entity.fileName)" class="btn btn-link" translate="INVOICE.DOWNLOAD"></a>'
-                }
-            ]
+        // pagination
+        $scope.model = {
+            currentPage: 1,
+            invoicesPerPage: 10,
+            startInvoice: 0,
+            endInvoice: 10
         };
+        $scope.invoicesPerPageOptions = [1, 5, 10, 20, 25, 50];
 
-        $scope.downloadInvoice = function (url, fileName) {
-            var input = document.getElementById('fileDialog'),
+        $scope.$watch('[model.currentPage,model.invoicesPerPage]', function (values) {
+            $log.debug('[InvoicesCtrl] values', values);
+            var currentPage = parseInt(values[0], 10),
+                invoicesPerPage = parseInt(values[1], 10),
+                i = Math.max(0, currentPage - 1);
+
+            $scope.model.startInvoice = i * invoicesPerPage;
+            $scope.model.endInvoice = $scope.model.startInvoice + invoicesPerPage;
+        });
+
+        $scope.downloadInvoice = function (invoice) {
+            var fileName = $filter('translate')('INVOICE.FILE_NAME') + invoice.number + '.pdf',
                 remote = require('remote'),
-                fs = remote.require('fs'),
-                suffixNumber = 1;
+                win = remote.getCurrentWindow(),
+                dialog = remote.require('dialog'),
+                ipc = require('ipc'),
+                userHome = ipc.sendSync('get-user-home');
 
-            function checkFile(folder, file) {
-                fs.exists(folder + '/' + file, function (exists) {
-                    var request, tmp;
-                    if (exists) {
-                        tmp = fileName.replace(/\.pdf$/, ' (' + suffixNumber + ').pdf');
-                        suffixNumber++;
-                        checkFile(folder, tmp);
-                    } else {
-                        request = remote.require('request');
-                        request(url).pipe(fs.createWriteStream(folder + '/' + file));
-                    }
-                });
+            if (!/\/$/.test(userHome)) {
+                userHome += '/';
             }
 
-            function onChange(event) {
-                $log.debug('onChange', event);
-                if (input.files && input.files.length) {
-                    input.removeEventListener('change', onChange);
+            console.log('language', navigator.language);
 
-                    checkFile(input.files[0].path, fileName);
-                    input.files.length = 0;
+            dialog.showSaveDialog(win, {
+                defaultPath: userHome + fileName,
+                title: $filter('translate')('INVOICE.SAVE_FILE')
+            }, function (path) {
+                if (!path) {
+                    // user cancelled
+                    return;
                 }
-            }
 
-            input.addEventListener('change', onChange);
-            input.click();
+                var request = remote.require('request'),
+                    fs = remote.require('fs');
+
+                request(invoice.url).pipe(fs.createWriteStream(path));
+            });
         };
 
         $scope.$watch('invoices', function (invoices) {
             if (!invoices) {
                 return;
             }
-
-            $scope.invoicesData = [];
+            $scope.turnOver = 0;
 
             invoices.forEach(function (invoice) {
-                var state;
-
-                if (invoice.isPaid()) {
-                    state = $filter('translate')('INVOICE.STATE.PAID');
-                } else if (invoice.isOverDue()) {
-                    state = $filter('translate')('INVOICE.STATE.OVERDUE');
-                } else {
-                    state = $filter('translate')('INVOICE.STATE.UNPAID');
-                }
-
-                $scope.invoicesData.push({
-                    state: state,
-                    number: invoice.number,
-                    client: invoice.client,
-                    total: $filter('number')(invoice.total),
-                    date: invoice.invoiceDate.format('L'),
-                    url: invoice.url,
-                    fileName: $filter('translate')('INVOICE.FILE_NAME') + invoice.number + '.pdf'
-                });
+                $scope.turnOver += invoice.total;
             });
-
-            $log.debug('[CustomerInvoicesCtrl] invoicesData', $scope.invoicesData);
         });
     }];
 }());

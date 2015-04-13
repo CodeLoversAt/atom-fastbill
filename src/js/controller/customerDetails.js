@@ -21,14 +21,14 @@
                 label: 'CUSTOMER.INVOICES',
                 active: true,
                 controller: 'InvoicesCtrl',
-                templateUrl: 'partials/customer-details/invoices.html'
+                templateUrl: 'partials/invoices.html'
             },
             {
                 name: 'projects',
                 label: 'CUSTOMER.PROJECTS',
                 active: false,
                 controller: 'ProjectsCtrl',
-                templateUrl: 'partials/customer-details/projects.html'
+                templateUrl: 'partials/projects.html'
             }
         ];
 

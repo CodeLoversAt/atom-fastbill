@@ -1,3 +1,6 @@
+$sidebar-background: #efefef;
+$sidebar-animation-length: 0.3s;
+
 html, body {
     margin: 0;
     padding: 0;
@@ -6,21 +9,97 @@ html, body {
 
 body {
     box-sizing: border-box;
-    padding-top: 20px;
+    overflow-x: hidden;
 }
 
 .site-wrapper {
     min-height: 100%;
+    display: flex;
+
+    .toggle-sidebar {
+        position: absolute;
+        left: 0;
+        transition: left $sidebar-animation-length ease;
+    }
+
+    &.show-sidebar {
+        .toggle-sidebar {
+            left: 200px;
+        }
+    }
+
+
+    @media(max-width: $screen-md-max) {
+        &.show-sidebar {
+            .site-wrapper-inner {
+                margin-left: 0;
+                margin-right: -200px;
+            }
+        }
+    }
 }
 
 .site-wrapper-inner {
     display: flex;
+    align-items: stretch;
+    flex-grow: 1;
+    transition: margin-left $sidebar-animation-length ease, margin-right $sidebar-animation-length ease;
+    margin-left: 0;
+
+    @media(max-width: $screen-md-max) {
+        margin-left: -200px;
+    }
 
     .nav-sidebar {
         flex: 2;
+        box-shadow: inset -7px 0 20px -7px rgba(0,0,0,0.75);
+        padding: 0;
+        background: $sidebar-background;
+        flex-basis: 200px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        .sidebar-nav {
+            display: flex;
+            min-height: 100vh;
+            flex-grow: 1;
+            flex-direction: column;
+            align-items: stretch;
+            margin: 0;
+
+            > li {
+                flex-grow: 0;
+
+                &.spacer {
+                    flex-grow: 1;
+                }
+
+                > a {
+                    padding: 10px;
+                    padding-right: 30px;
+                    display: block;
+                }
+                border-bottom: 1px solid #ccc;
+
+                &:not(.spacer) {
+                    &:hover {
+                        background: lighten($sidebar-background, 5%);
+                    }
+
+                    &.active {
+                        background: #fff;
+                    }
+                }
+            }
+        }
     }
 
     .main-content {
-        flex: 10;
+        flex-grow: 1;
+        flex-shrink: 1;
     }
 }

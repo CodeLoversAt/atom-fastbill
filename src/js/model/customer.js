@@ -6,6 +6,7 @@
             this.setData(data);
             this.id = this.customerId;
             this.label = this.getName();
+            this.number = this.customerNumber;
         };
 
     Customer.prototype = new Model();

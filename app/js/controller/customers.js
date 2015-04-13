@@ -1,0 +1,2 @@
+!function(){"use strict";module.exports=["$scope","$log","FastBill",function(e,t,s){s.getCustomers().then(function(t){e.$apply(function(){e.customers=t})}),e.model={currentPage:1,customersPerPage:10,startCustomer:0,endCustomer:10},e.customersPerPageOptions=[1,5,10,20,25,50],e.$watch("[model.currentPage,model.customersPerPage]",function(s){t.debug("[CustomersCtrl] values",s);var o=parseInt(s[0]),r=parseInt(s[1]),u=Math.max(0,o-1);e.model.startCustomer=u*r,e.model.endCustomer=e.model.startCustomer+r})}]}();
+//# sourceMappingURL=../controller/customers.js.map

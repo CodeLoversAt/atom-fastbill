@@ -1,7 +1,13 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "layout";
-@import "../../bower_components/angular-ui-grid/ui-grid.css";
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import "../../app/node_modules/font-awesome/scss/font-awesome";
 
 a {
     cursor: pointer;
+}
+
+form.login-form {
+    max-width: 700px;
+    margin: 100px auto 0;
 }

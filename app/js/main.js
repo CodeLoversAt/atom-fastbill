@@ -1,0 +1,2 @@
+!function(){"use strict";function r(){return process.env["win32"==process.platform?"USERPROFILE":"HOME"]}var e=require("app"),n=require("browser-window");require("crash-reporter").start();var o=null;e.on("window-all-closed",function(){"darwin"!=process.platform&&e.quit()}),e.on("ready",function(){o=new n({width:1e3,height:800}),o.loadUrl("file://"+__dirname+"/../index.html"),o.on("closed",function(){o=null})});var i=require("ipc");i.on("get-user-home",function(e){e.returnValue=r()})}();
+//# sourceMappingURL=main.js.map

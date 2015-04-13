@@ -2,9 +2,16 @@
     "use strict";
 
     module.exports = {
+        "LAYOUT": {
+            "SHOW_SIDEBAR": "Menü einblenden",
+            "HIDE_SIDEBAR": "Menü ausblenden"
+        },
         "NAV": {
             "HOME": "Home",
-            "CUSTOMERS": "Kunden"
+            "CUSTOMERS": "Kunden",
+            "INVOICES": "Rechnungen",
+            "BACK": "Zurück",
+            "LOGOUT": "Abmelden"
         },
         "LOGIN": {
             "USERNAME": "Benutzername:",
@@ -16,6 +23,7 @@
             "CLIENT": "Kunde",
             "TOTAL": "Gesamt",
             "DATE": "Datum",
+            "DUE_DATE": "Fälligkeitsdatum",
             "STATE": {
                 "LABEL": "Status",
                 "PAID": "Bezahlt",
@@ -23,15 +31,29 @@
                 "OVERDUE": "Fällig"
             },
             "DOWNLOAD": "Download",
-            "FILE_NAME": "Rechnung"
+            "FILE_NAME": "Rechnung",
+            "INVOICES_PER_PAGE": "Rechnungen pro Seite:",
+            "SAVE_FILE": "Rechnung speichern"
         },
         "CUSTOMER": {
             "INVOICES": "Rechnungen",
-            "PROJECTS": "Projekte"
+            "PROJECTS": "Projekte",
+            "NAME": "Kunde",
+            "NUMBER": "Nummer",
+            "CURRENCY_CODE": "Währung",
+            "DETAILS": "Details",
+            "CUSTOMERS_PER_PAGE": "Kunden pro Seite:",
+            "TURNOVER": "Umsatz"
         },
         "PROJECT": {
             "TITLE": "Titel",
             "START_DATE": "Startdatum"
+        },
+        "PAGINATION": {
+            "FIRST": "Erste Seite",
+            "LAST": "Letzte Seite",
+            "NEXT": "Weiter",
+            "PREVIOUS": "Zurück"
         }
     };
 }());

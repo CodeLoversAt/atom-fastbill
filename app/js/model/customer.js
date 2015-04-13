@@ -1,0 +1,2 @@
+!function(){"use strict";var t=require("./model"),e=function(t){this.setData(t),this.id=this.customerId,this.label=this.getName(),this.number=this.customerNumber};e.prototype=new t,e.prototype.getName=function(){return this.organization||this.firstName+" "+this.lastName},module.exports=e}();
+//# sourceMappingURL=../model/customer.js.map

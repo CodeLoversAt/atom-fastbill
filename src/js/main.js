@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    var app = require('app');
-    var BrowserWindow = require('browser-window');
+    var app = require('app'),
+        BrowserWindow = require('browser-window');
 
     // report crashes
     require('crash-reporter').start();
@@ -33,37 +33,7 @@
         return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
     }
 
-    ipc.on('download-invoice', function (event, data) {
-        var target = getUserHome() + '/',
-            fs = require('fs'),
-            request = require('request'),
-            file, suffixNumber = 1;
-
-        function checkFile (fileName) {
-            fs.exists(fileName, function (exists) {
-                var tmp;
-                if (exists) {
-                    tmp = target.replace(/\.pdf$/, ' (' + suffixNumber + ').pdf');
-                    suffixNumber++;
-                    checkFile(tmp);
-                } else {
-                    file = fs.createWriteStream(fileName);
-
-                    request(data.url).pipe(file);
-                }
-            });
-        }
-
-
-        fs.exists(target + 'Downloads', function (exists) {
-            if (exists) {
-                target += 'Downloads/';
-            }
-
-            target += data.fileName;
-
-            checkFile(target);
-        });
-
+    ipc.on('get-user-home', function (event) {
+        event.returnValue = getUserHome();
     });
 }());

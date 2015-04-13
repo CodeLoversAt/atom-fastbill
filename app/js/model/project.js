@@ -1,0 +1,2 @@
+!function(){"use strict";var t=require("./model"),e=require("moment"),i=function(t){this.setData(t),this.id=this.projectId,this.title=this.projectName,this.startDate=e(this.startDate)};i.prototype=new t,module.exports=i}();
+//# sourceMappingURL=../model/project.js.map

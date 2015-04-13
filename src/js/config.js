@@ -51,14 +51,15 @@
                     }
                 }
             })
-            .state('customers.details.invoices', {
-                url: '/customers/:customerId/invoices',
-                parent: 'customers.details',
+
+            .state('invoices', {
+                url: '/invoices',
                 views: {
-                    'invoices': {
-                        templateUrl: 'partials/customer-details/invoices.html',
-                        controller: 'CustomerInvoicesCtrl'
-                    }
+                    'content': {
+                        templateUrl: 'partials/invoices.html',
+                        controller: 'InvoicesCtrl'
+                    },
+                    'nav': navView
                 }
             });
 
