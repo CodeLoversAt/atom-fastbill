@@ -1,6 +1,6 @@
-(function() {
-    var angular = require('angular');
-    var app = angular.module('service', []);
+import angular from 'angular';
+import FastBillFactory from './fastbill';
 
-    app.factory('FastBill', require('./fastbill'));
-})();
+var app = angular.module('service', []);
+
+app.factory('FastBill', FastBillFactory);

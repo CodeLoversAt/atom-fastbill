@@ -1,2 +1,22 @@
-!function(){"use strict";module.exports=["$scope","$rootScope","$state","$log",function(o,e,t,n){o.showSidebar=!1,o.toggleSidebar=function(){n.debug("[BodyCtrl] toggleSidebar",o.showSidebar),o.showSidebar=!o.showSidebar},o.showToggleButton=function(){return"login"!==t.current.name},e.$on("$stateChangeSuccess",function(){o.showSidebar=!1})}]}();
+"use strict";
+var $__default = ['$scope', '$rootScope', '$state', '$log', function($scope, $rootScope, $state, $log) {
+  $scope.showSidebar = false;
+  $scope.toggleSidebar = function() {
+    $log.debug('[BodyCtrl] toggleSidebar', $scope.showSidebar);
+    $scope.showSidebar = !$scope.showSidebar;
+  };
+  $scope.showToggleButton = function() {
+    return 'login' !== $state.current.name;
+  };
+  $rootScope.$on('$stateChangeSuccess', function() {
+    $scope.showSidebar = false;
+  });
+}];
+Object.defineProperties(module.exports, {
+  default: {get: function() {
+      return $__default;
+    }},
+  __esModule: {value: true}
+});
+
 //# sourceMappingURL=../controller/body.js.map

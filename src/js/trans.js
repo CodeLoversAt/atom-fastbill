@@ -1,38 +1,32 @@
-(function () {
-    "use strict";
+import angular from 'angular';
+import 'angular-translate';
+import EN from './translations/en';
+import DE from './translations/de';
+import moment from 'moment';
 
-    require('angular-translate');
+var app = angular.module('trans', ['pascalprecht.translate', 'ngStorage']);
 
-    var angular = require('angular'),
-        app = angular.module('trans', ['pascalprecht.translate', 'ngStorage']);
+app.config(['$translateProvider', function ($translateProvider) {
+    $translateProvider.translations('en', EN);
+    $translateProvider.translations('de', DE);
 
-    app.config(['$translateProvider', function ($translateProvider) {
-        var en = require('./translations/en');
-        var de = require('./translations/de');
-        $translateProvider.translations('en', en);
-        $translateProvider.translations('de', de);
+    $translateProvider.preferredLanguage('de');
+}]);
 
-        $translateProvider.preferredLanguage('de');
-    }]);
+app.run(['paginationConfig', '$filter', '$rootScope', '$timeout', '$translate', '$localStorage', '$locale', function (paginationConfig, $filter, $rootScope, $timeout, $translate, $localStorage, $locale) {
+    paginationConfig.lastText = $filter('translate')('PAGINATION.LAST');
+    paginationConfig.firstText = $filter('translate')('PAGINATION.FIRST');
+    paginationConfig.previousText = $filter('translate')('PAGINATION.PREVIOUS');
+    paginationConfig.nextText = $filter('translate')('PAGINATION.NEXT');
 
-    app.run(['paginationConfig', '$filter', '$rootScope', '$timeout', '$translate', '$localStorage', '$locale', function (paginationConfig, $filter, $rootScope, $timeout, $translate, $localStorage, $locale) {
-        paginationConfig.lastText = $filter('translate')('PAGINATION.LAST');
-        paginationConfig.firstText = $filter('translate')('PAGINATION.FIRST');
-        paginationConfig.previousText = $filter('translate')('PAGINATION.PREVIOUS');
-        paginationConfig.nextText = $filter('translate')('PAGINATION.NEXT');
+    // translations
+    $rootScope.$on('$translateChangeSuccess', function (event, data) {
+        $localStorage._lang = data.language;
+        $locale.id = data.language;
+    });
 
-        console.debug('$locale', $locale);
-
-        // translations
-        $rootScope.$on('$translateChangeSuccess', function (event, data) {
-            require('moment').locale(data.language);
-            $localStorage._lang = data.language;
-            $locale.id = data.language;
-        });
-
-        $localStorage.$default({
-            _lang: 'de'
-        });
-        $translate.use($localStorage._lang);
-    }]);
-}());
+    $localStorage.$default({
+        _lang: 'de'
+    });
+    $translate.use($localStorage._lang);
+}]);

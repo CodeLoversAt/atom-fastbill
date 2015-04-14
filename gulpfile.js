@@ -6,7 +6,8 @@
         uglify = require('gulp-uglify'),
         exec = require('child_process').exec,
         sourcemaps = require('gulp-sourcemaps'),
-        del = require('del');
+        del = require('del'),
+        traceur = require('gulp-traceur');
 
     gulp.task('styles', ['bower', 'apm'], function () {
         return gulp.src('src/scss/style.scss')
@@ -18,7 +19,10 @@
     gulp.task('scripts', function () {
         return gulp.src('src/js/**/*.js')
             .pipe(sourcemaps.init())
-            .pipe(uglify())
+            .pipe(traceur({
+                modules: 'commonjs'
+            }))
+            //.pipe(uglify())
             .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest('app/js'));
     });

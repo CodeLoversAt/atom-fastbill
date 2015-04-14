@@ -1,18 +1,20 @@
-(function () {
-    "use strict";
+import changeCase from 'change-case';
+import _ from 'lodash';
 
-    var Model = function () {},
-        camelCase = require('change-case').camel;
+export default class Model {
+    constructor(data) {
+        this.setData(data);
+    }
 
-    Model.prototype.setData = function (data) {
+    setData(data) {
+        this._originalKeys = _.keys(data);
+
         var key;
 
         for (key in data) {
             if (data.hasOwnProperty(key)) {
-                this[camelCase(key)] = data[key];
+                this[changeCase.camel(key)] = data[key];
             }
         }
-    };
-
-    module.exports = Model;
-}());
+    }
+}

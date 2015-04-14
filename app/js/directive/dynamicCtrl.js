@@ -1,2 +1,22 @@
-!function(){"use strict";module.exports=["$compile","$parse",function(t,r){return{restrict:"A",terminal:!0,priority:1e5,link:function(n,e){var i=r(e.attr("dynamic-ctrl"))(n);e.removeAttr("dynamic-ctrl"),e.attr("ng-controller",i),t(e)(n)}}}]}();
+"use strict";
+var $__default = ['$compile', '$parse', function($compile, $parse) {
+  return {
+    restrict: 'A',
+    terminal: true,
+    priority: 100000,
+    link: function($scope, $element) {
+      var name = $parse($element.attr('dynamic-ctrl'))($scope);
+      $element.removeAttr('dynamic-ctrl');
+      $element.attr('ng-controller', name);
+      $compile($element)($scope);
+    }
+  };
+}];
+Object.defineProperties(module.exports, {
+  default: {get: function() {
+      return $__default;
+    }},
+  __esModule: {value: true}
+});
+
 //# sourceMappingURL=../directive/dynamicCtrl.js.map

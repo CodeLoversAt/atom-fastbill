@@ -1,17 +1,12 @@
-(function () {
-    "use strict";
+import Model from './model';
+import moment from 'moment';
 
-    var Model = require('./model'),
-        moment = require('moment'),
-        Project = function (data) {
-            this.setData(data);
-            this.id = this.projectId;
+export default class extends Model {
+    constructor(data) {
+        super(data);
+        this.id = this.projectId;
 
-            this.title = this.projectName;
-            this.startDate = moment(this.startDate);
-        };
-
-    Project.prototype = new Model();
-
-    module.exports = Project;
-}());
+        this.title = this.projectName;
+        this.startDate = moment(this.startDate);
+    }
+}

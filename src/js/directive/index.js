@@ -1,9 +1,6 @@
-(function () {
-    "use strict";
+import angular from 'angular';
+import dynamicCtrl from './dynamicCtrl';
 
-    var angular = require('angular'),
-        dynamicCtrl = require('./dynamicCtrl'),
-        app = angular.module('directive', []);
+var app = angular.module('directive', []);
 
-    app.directive('dynamicCtrl', dynamicCtrl);
-}());
+app.directive('dynamicCtrl', dynamicCtrl);

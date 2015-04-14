@@ -1,11 +1,14 @@
+import app from 'app';
+import BrowserWindow from 'browser-window';
+import crashReporter from 'crash-reporter';
+
+
 (function() {
     'use strict';
-    var app = require('app'),
-        BrowserWindow = require('browser-window'),
-        ipc, mainWindow;
+    var mainWindow, ipc;
 
     // report crashes
-    require('crash-reporter').start();
+    crashReporter.start();
 
     // keep global reference of the window object
      mainWindow = null;
@@ -24,7 +27,6 @@
             size = display.workAreaSize,
             x = display.bounds.x + size.width * 0.05,
             y = display.bounds.y;
-        console.log('size', size, display, x, y);
 
         mainWindow = new BrowserWindow({width: size.width * 0.9, height: size.height, x: x, y: y});
 

@@ -1,23 +1,27 @@
-(function () {
-    'use strict';
+import angular from 'angular';
+import client from 'fastbill-client';
+import Customer from '../model/customer';
+import Invoice from '../model/invoice';
+import Project from '../model/project';
 
-    var angular = require('angular'),
-        Customer = require('../model/customer'),
-        FastBill = function ($q, $rootScope, $log) {
-            this.client = require('fastbill-client');
-            this.$q = $q;
-            this.$rootScope = $rootScope;
-            this.$log = $log;
-            this.authenticated = false;
-            this.initialize();
-        };
+class FastBill {
+    constructor($q, $rootScope, $log) {
+        "use strict";
+        this.client = client;
 
-    FastBill.prototype.initialize = function () {
+        this.$q = $q;
+        this.$rootScope = $rootScope;
+        this.$log = $log;
+        this.authenticated = false;
+        this.initialize();
+    }
+
+    initialize() {
         // check local storage
         this.restoreState();
-    };
+    }
 
-    FastBill.prototype.restoreState = function () {
+    restoreState() {
         var self = this,
             serialized,
             credentials;
@@ -40,31 +44,31 @@
         } catch (e) {
             this.$log.warn('[FastBill] error restoring state:', e);
         }
-    };
+    }
 
-    FastBill.prototype.saveState = function () {
+    saveState() {
         try {
             localStorage._credentials = angular.toJson(this.credentials);
         } catch (e) {
             this.$log.warn('[FastBill] error saving state:', e);
         }
-    };
+    }
 
-    FastBill.prototype.clearState = function () {
+    clearState() {
         try {
             delete localStorage._credentials;
         } catch (e) {
             this.$log.warn('[FastBill] error clearing state:', e);
         }
-    };
+    }
 
-    FastBill.prototype.ensureAuthenticated = function () {
+    ensureAuthenticated() {
         if (!this.authenticated) {
             throw 'You need to call login before accessing any api method';
         }
-    };
+    }
 
-    FastBill.prototype.login = function (username, apiKey) {
+    login(username, apiKey) {
         var deferred = this.$q.defer(),
             self = this;
         this.client.bootstrap(username, apiKey);
@@ -86,9 +90,9 @@
         });
 
         return deferred.promise;
-    };
+    }
 
-    FastBill.prototype.getCustomers = function () {
+    getCustomers() {
         this.ensureAuthenticated();
         return this.client.api.customer.get().then(function (data) {
             var customers = [];
@@ -99,9 +103,9 @@
 
             return customers;
         });
-    };
+    }
 
-    FastBill.prototype.getCustomer = function (id) {
+    getCustomer(id) {
         this.ensureAuthenticated();
         return this.client.api.customer.getById(id).then(function (data) {
             if (data && data.length) {
@@ -110,9 +114,9 @@
 
             return null;
         });
-    };
+    }
 
-    FastBill.prototype.isAuthenticated = function () {
+    isAuthenticated() {
         if (this.deferred) {
             return this.deferred.promise;
         }
@@ -122,13 +126,12 @@
         deferred.resolve(this.authenticated);
 
         return deferred.promise;
-    };
+    }
 
-    FastBill.prototype.getInvoices = function (customerId) {
+    getInvoices(customerId) {
         this.ensureAuthenticated();
         this.$log.debug('[FastBill] getInvoices', customerId);
-        var Invoice = require('../model/invoice'),
-            invoicesHandler = function (data) {
+        var invoicesHandler = function (data) {
                 var invoices = [];
 
                 data.forEach(function (i) {
@@ -143,12 +146,11 @@
         } else {
             return this.client.api.invoice.get().then(invoicesHandler);
         }
-    };
+    }
 
-    FastBill.prototype.getProjects = function (customerId) {
+    getProjects(customerId) {
         this.ensureAuthenticated();
-        var Project = require('../model/project'),
-            projectsHandler = function (data) {
+        var projectsHandler = function (data) {
                 var projects = [];
 
                 data.forEach(function (p) {
@@ -163,15 +165,15 @@
         }
 
         return this.client.api.project.get().then(projectsHandler);
-    };
+    }
 
-    FastBill.prototype.logout = function () {
+    logout() {
         this.authenticated = false;
         this.credentials = null;
         this.clearState();
-    };
+    }
+}
 
-    module.exports = ['$q', '$rootScope', '$log', function ($q, $rootScope, $log) {
-        return new FastBill($q, $rootScope, $log);
-    }];
-}());
+export default ['$q', '$rootScope', '$log', function ($q, $rootScope, $log) {
+    return new FastBill($q, $rootScope, $log);
+}];

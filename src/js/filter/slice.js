@@ -1,15 +1,11 @@
-(function () {
-    "use strict";
+import angular from 'angular';
 
-    var angular = require('angular');
+export default function () {
+    return function (arr, start, end) {
+        if (!angular.isArray(arr)) {
+            return [];
+        }
 
-    module.exports = function () {
-        return function (arr, start, end) {
-            if (!angular.isArray(arr)) {
-                return [];
-            }
-
-            return arr.slice(start, end);
-        };
+        return arr.slice(start, end);
     };
-}());
+};

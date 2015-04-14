@@ -1,33 +1,27 @@
-(function () {
-    "use strict";
+import Model from './model';
+import moment from 'moment';
 
-    var Model = require('./model'),
-        moment = require('moment'),
-        Invoice = function (data) {
-            this.setData(data);
+export default class extends Model {
+    constructor(data) {
+        super(data);
+        this.id = this.invoiceId;
+        this.number = this.invoiceNumber;
+        this.client = this.organization;
+        this.dueDate = moment(this.dueDate);
+        this.paidDate = this.paymentInfo ? moment(this.paidDate) : null;
+        this.invoiceDate = moment(this.invoiceDate);
+        this.url = this.documentUrl;
+    }
 
-            this.id = this.invoiceId;
-            this.number = this.invoiceNumber;
-            this.client = this.organization;
-            this.dueDate = moment(this.dueDate);
-            this.paidDate = this.paymentInfo ? moment(this.paidDate) : null;
-            this.invoiceDate = moment(this.invoiceDate);
-            this.url = this.documentUrl;
-        };
-
-    Invoice.prototype = new Model();
-
-    Invoice.prototype.isPaid = function () {
+    isPaid() {
         return null !== this.paidDate;
-    };
+    }
 
-    Invoice.prototype.isOverDue = function () {
+    isOverDue() {
         return !this.isPaid() && moment().isAfter(this.dueDate);
-    };
+    }
 
-    Invoice.prototype.fileName = function () {
+    fileName() {
         return 'Rechnung' + this.number + '.pdf';
-    };
-
-    module.exports = Invoice;
-}());
+    }
+}

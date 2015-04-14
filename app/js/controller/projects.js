@@ -1,2 +1,36 @@
-!function(){"use strict";module.exports=["$scope","$log","FastBill","$filter","$timeout","$state",function(e,t,r,o,c,s){function a(t){e.$apply(function(){e.projects=t})}s.params.customerId?r.getProjects(s.params.customerId).then(a):r.getProjects(null).then(a),e.model={currentPage:1,projectsPerPage:10,startProject:0,endProject:10},e.projectsPerPageOptions=[1,5,10,20,25,50],e.$watch("[model.currentPage,model.projectsPerPage]",function(r){t.debug("[ProjectsCtrl] values",r);var o=parseInt(r[0]),c=parseInt(r[1]),s=Math.max(0,o-1);e.model.startProject=s*c,e.model.endProject=e.model.startProject+c})}]}();
+"use strict";
+var $__default = ['$scope', '$log', 'FastBill', '$filter', '$timeout', '$state', function($scope, $log, FastBill, $filter, $timeout, $state) {
+  function projectsLoaded(projects) {
+    $scope.$apply(function() {
+      $scope.projects = projects;
+    });
+  }
+  if ($state.params.customerId) {
+    FastBill.getProjects($state.params.customerId).then(projectsLoaded);
+  } else {
+    FastBill.getProjects(null).then(projectsLoaded);
+  }
+  $scope.model = {
+    currentPage: 1,
+    projectsPerPage: 10,
+    startProject: 0,
+    endProject: 10
+  };
+  $scope.projectsPerPageOptions = [1, 5, 10, 20, 25, 50];
+  $scope.$watch('[model.currentPage,model.projectsPerPage]', function(values) {
+    $log.debug('[ProjectsCtrl] values', values);
+    var currentPage = parseInt(values[0]),
+        projectsPerPage = parseInt(values[1]),
+        i = Math.max(0, currentPage - 1);
+    $scope.model.startProject = i * projectsPerPage;
+    $scope.model.endProject = $scope.model.startProject + projectsPerPage;
+  });
+}];
+Object.defineProperties(module.exports, {
+  default: {get: function() {
+      return $__default;
+    }},
+  __esModule: {value: true}
+});
+
 //# sourceMappingURL=../controller/projects.js.map
