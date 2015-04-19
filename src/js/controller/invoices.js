@@ -1,5 +1,5 @@
 import angular from 'angular';
-import Bridge from '../lib/bridge';
+import Bridge from '../../lib/bridge';
 
 export default ['$scope', '$log', 'FastBill', '$filter', '$state', function ($scope, $log, FastBill, $filter, $state) {
     var bridge = new Bridge();

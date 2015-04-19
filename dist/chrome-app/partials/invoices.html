@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="page-header" ng-show="showHeader">
+        <h1 translate="NAV.INVOICES"></h1>
+    </div>
+    <table class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <th translate="CUSTOMER.TURNOVER"></th>
+            <th colspan="2">{{ turnOver | currency : 'EUR ' }}</th>
+            <th colspan="3" class="text-right" ng-if="showHeader">
+                <label class="control-label" for="invoices-per-page" translate="INVOICE.INVOICES_PER_PAGE"></label>
+            </th>
+            <th colspan="2" class="text-right" ng-if="!showHeader">
+                <label class="control-label" for="invoices-per-page" translate="INVOICE.INVOICES_PER_PAGE"></label>
+            </th>
+            <th>
+                <select id="invoices-per-page" class="form-control" ng-model="model.invoicesPerPage" ng-options="value for value in invoicesPerPageOptions"></select>
+            </th>
+        </tr>
+        <tr>
+            <th translate="INVOICE.STATE.LABEL"></th>
+            <th translate="INVOICE.NUMBER"></th>
+            <th translate="INVOICE.DATE"></th>
+            <th translate="INVOICE.DUE_DATE"></th>
+            <th translate="INVOICE.CLIENT" ng-show="showHeader"></th>
+            <th translate="INVOICE.TOTAL"></th>
+            <th translate="INVOICE.DOWNLOAD"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th colspan="7">
+                <pagination total-items="invoices.length" ng-model="model.currentPage" items-per-page="model.invoicesPerPage" boundary-links="true" max-size="10"></pagination>
+            </th>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr ng-repeat="invoice in invoices | orderBy:'number':true | slice: model.startInvoice:model.endInvoice">
+            <td>
+                <span class="label label-success" translate="INVOICE.STATE.PAID" ng-show="invoice.isPaid()"></span>
+                <span class="label label-default" translate="INVOICE.STATE.UNPAID" ng-hide="invoice.isPaid() || invoice.isOverDue()"></span>
+                <span class="label label-warning" translate="INVOICE.STATE.OVERDUE" ng-show="invoice.isOverDue()"></span>
+            </td>
+            <td>
+                {{ invoice.number }}
+            </td>
+            <td>
+                {{ invoice.invoiceDate.format('L') }}
+            </td>
+            <td>
+                {{ invoice.dueDate.format('L') }}
+            </td>
+            <td ng-show="showHeader">
+                <a ui-sref="customers.details({customerId: invoice.customerId})" ng-bind-html="invoice.client"></a>
+            </td>
+            <td class="text-right">
+                {{ invoice.total | currency : invoice.currencyCode + ' ' }}
+            </td>
+            <td class="text-right">
+                <a ng-click="downloadInvoice(invoice)" class="btn btn-xs btn-info">
+                    <i class="fa fa-download"></i>
+                    <span translate="INVOICE.DOWNLOAD"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <input ng-hide="true" type="file" id="fileDialog"  webkitdirectory />
+</div>

@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "FastBill",
+    "version": "0.0.1",
+    "minimum_chrome_version": "23",
+    "icons": {
+    },
+    "app": {
+        "background": {
+            "scripts": ["main.js"]
+        }
+    },
+    "permissions": [
+        "storage",
+        "https://my.fastbill.com/api/1.0/api.php",
+        {"fileSystem": ["write"]}
+    ]
+}

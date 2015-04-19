@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["bootstrap.js"],"sourcesContent":["\"use strict\";\n(function() {\n  require('./app');\n}());\n\n//# sourceMappingURL=../js/bootstrap.js.map"],"file":"bootstrap.js","sourceRoot":"/source/"}

@@ -1,0 +1,29 @@
+<nav>
+    <ul class="list-unstyled sidebar-nav">
+        <li ng-class="{ 'active': isActive('index') }">
+            <a ui-sref="index">
+                <i class="fa fa-fw fa-home"></i>
+                <span translate="NAV.HOME"></span>
+            </a>
+        </li>
+        <li ng-class="{ 'active': isActive('customers') }">
+            <a ui-sref="customers">
+                <i class="fa fa-fw fa-building"></i>
+                <span translate="NAV.CUSTOMERS"></span>
+            </a>
+        </li>
+        <li ng-class="{ 'active': isActive('invoices') }">
+            <a ui-sref="invoices">
+                <i class="fa fa-fw fa-file-text"></i>
+                <span translate="NAV.INVOICES"></span>
+            </a>
+        </li>
+        <li class="spacer"></li>
+        <li>
+            <a ng-click="logout()">
+                <i class="fa fa-fw fa-sign-out"></i>
+                <span translate="NAV.LOGOUT"></span>
+            </a>
+        </li>
+    </ul>
+</nav>

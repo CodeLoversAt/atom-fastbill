@@ -1,0 +1,7 @@
+<div class="page-header clearfix">
+    <a ui-sref="customers" class="pull-right btn btn-link" translate="NAV.BACK"></a>
+    <h3 ng-bind-html="customer.label" class="pull-left"></h3>
+</div>
+<tabset ng-if="customer">
+    <tab ng-repeat="tab in tabs" heading="{{ tab.label|translate }}" active="tab.active" select="tabSelected(tab.name)"><div dynamic-ctrl="tab.controller" ng-include="tab.templateUrl"></div></tab>
+</tabset>

@@ -1,7 +1,8 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "layout";
-$fa-font-path: "../node_modules/font-awesome/fonts";
+$fa-font-path: "../../node_modules/font-awesome/fonts";
 @import "../../app/node_modules/font-awesome/scss/font-awesome";
+@import "angular-csp";
 
 a {
     cursor: pointer;

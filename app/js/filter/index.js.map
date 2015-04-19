@@ -1,1 +1,1 @@
-{"version":3,"names":[],"mappings":"","sources":["filter/index.js"],"sourcesContent":["import angular from 'angular';\nimport slice from './slice';\n\nvar app = angular.module('filter', []);\n\napp.filter('slice', slice);\n"],"file":"filter/index.js","sourceRoot":"/source/"}
+{"version":3,"names":[],"mappings":"","sources":["js/filter/index.js"],"sourcesContent":["import angular from 'angular';\nimport slice from './slice';\n\nvar app = angular.module('filter', []);\n\napp.filter('slice', slice);\n"],"file":"js/filter/index.js","sourceRoot":"/source/"}

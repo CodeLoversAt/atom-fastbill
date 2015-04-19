@@ -15,11 +15,16 @@
     "grunt-atom-shell-app-builder": "0.0.7",
     "grunt-build-atom-shell": "^1.1.5",
     "gulp": "^3.8.11",
+    "gulp-browserify": "^0.5.1",
     "gulp-exec": "^2.1.1",
+    "gulp-if": "^1.2.5",
     "gulp-minify-css": "^1.0.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^1.3.3",
     "gulp-sourcemaps": "^1.5.1",
     "gulp-traceur": "^0.17.0",
-    "gulp-uglify": "^1.2.0"
-  }
+    "gulp-uglify": "^1.2.0",
+    "traceur": "0.0.88"
+  },
+  "dependencies": {}
 }

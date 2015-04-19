@@ -5,7 +5,7 @@ import Invoice from '../model/invoice';
 import Project from '../model/project';
 
 class FastBill {
-    constructor($q, $rootScope, $log) {
+    constructor($q, $rootScope, Storage, $log) {
         "use strict";
         this.client = client;
 
@@ -13,6 +13,7 @@ class FastBill {
         this.$rootScope = $rootScope;
         this.$log = $log;
         this.authenticated = false;
+        this.storage = Storage;
         this.initialize();
     }
 
@@ -27,20 +28,21 @@ class FastBill {
             credentials;
 
         try {
-            serialized = localStorage._credentials;
+            this.storage.get('_credentials', function (credentials) {
+                "use strict";
+                if (credentials) {
+                    self.deferred = self.$q.defer();
 
-            if (serialized) {
-                this.deferred = this.$q.defer();
-                credentials = angular.fromJson(serialized);
-                // try to login
-                this.login(credentials.username, credentials.apiKey)
-                    .then(function () {
-                        self.deferred.resolve(true);
-                        self.deferred = null;
-                    }, function () {
-                        self.deferred.resolve(false);
-                    });
-            }
+                    // try to login
+                    self.login(credentials.username, credentials.apiKey)
+                        .then(function () {
+                            self.deferred.resolve(true);
+                            self.deferred = null;
+                        }, function () {
+                            self.deferred.resolve(false);
+                        });
+                }
+            });
         } catch (e) {
             this.$log.warn('[FastBill] error restoring state:', e);
         }
@@ -48,7 +50,7 @@ class FastBill {
 
     saveState() {
         try {
-            localStorage._credentials = angular.toJson(this.credentials);
+            this.storage.set('_credentials', this.credentials);
         } catch (e) {
             this.$log.warn('[FastBill] error saving state:', e);
         }
@@ -174,6 +176,6 @@ class FastBill {
     }
 }
 
-export default ['$q', '$rootScope', '$log', function ($q, $rootScope, $log) {
-    return new FastBill($q, $rootScope, $log);
+export default ['$q', '$rootScope', 'Storage', '$log', function ($q, $rootScope, Storage, $log) {
+    return new FastBill($q, $rootScope, Storage, $log);
 }];

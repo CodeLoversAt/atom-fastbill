@@ -4,7 +4,7 @@ import EN from './translations/en';
 import DE from './translations/de';
 import moment from 'moment';
 
-var app = angular.module('trans', ['pascalprecht.translate', 'ngStorage']);
+var app = angular.module('trans', ['pascalprecht.translate']);
 
 app.config(['$translateProvider', function ($translateProvider) {
     $translateProvider.translations('en', EN);
@@ -13,7 +13,7 @@ app.config(['$translateProvider', function ($translateProvider) {
     $translateProvider.preferredLanguage('de');
 }]);
 
-app.run(['paginationConfig', '$filter', '$rootScope', '$timeout', '$translate', '$localStorage', '$locale', function (paginationConfig, $filter, $rootScope, $timeout, $translate, $localStorage, $locale) {
+app.run(['paginationConfig', '$filter', '$rootScope', '$timeout', '$translate', 'Storage', '$locale', function (paginationConfig, $filter, $rootScope, $timeout, $translate, Storage, $locale) {
     paginationConfig.lastText = $filter('translate')('PAGINATION.LAST');
     paginationConfig.firstText = $filter('translate')('PAGINATION.FIRST');
     paginationConfig.previousText = $filter('translate')('PAGINATION.PREVIOUS');
@@ -21,12 +21,13 @@ app.run(['paginationConfig', '$filter', '$rootScope', '$timeout', '$translate', 
 
     // translations
     $rootScope.$on('$translateChangeSuccess', function (event, data) {
-        $localStorage._lang = data.language;
+        Storage.set('_lang', data.language);
         $locale.id = data.language;
     });
 
-    $localStorage.$default({
-        _lang: 'de'
+    Storage.get('_lang', function (language) {
+        console.info('_lang', language);
+        language = (language && 'string' === typeof language) ? language : 'de';
+        $translate.use(language);
     });
-    $translate.use($localStorage._lang);
 }]);

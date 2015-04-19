@@ -4,3 +4,5 @@ app/bower_components
 app/node_modules
 cache
 build
+dist/chrome-app/bower_components
+dist/chrome-app/node_modules

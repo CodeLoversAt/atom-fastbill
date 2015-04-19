@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" ng-csp>
 <head>
     <title>FastBill</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="src/css/style.css" />
+    <base target="_blank" />
 </head>
 <body ng-controller="BodyCtrl" ng-cloak>
 <div class="site-wrapper" ng-class="{ 'show-sidebar': showSidebar && showToggleButton() }">
@@ -19,6 +20,6 @@
     </div>
 </div>
 <script src="node_modules/traceur/bin/traceur-runtime.js"></script>
-<script>(function() {require('./js/app');})();</script>
+<script src="src/js/bootstrap.js"></script>
 </body>
 </html>
